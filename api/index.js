@@ -11,7 +11,8 @@ const notion = new Client({
 // Ruta principal
 app.get('/', async (req, res) => {
   try {
-    res.send('Ongi etorri cursos de Alberto Mozo');
+    //res.send('Ongi etorri cursos de Alberto Mozo');
+    res.sendFile(__dirname + '/views/index.html'); // Sirve el HTML de la página de inicio
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al consultar Notion');

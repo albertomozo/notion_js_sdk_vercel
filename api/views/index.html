@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Mis cursos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido a Mi API</h1>
+    <p>Esta API permite realizar operaciones con cursos. A continuación se listan los endpoints disponibles:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Método</th>
+                <th>Ruta</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GET</td>
+                <td>/cursos</td>
+                <td>Devuelve todos los cursos</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/cursos/:id</td>
+                <td>Devuelve el curso con identificador :id</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/categorias</td>
+                <td>Devuelve todas las categorias</td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/categorias/:id</td>
+                <td>Devuelve todos los curos de la categoria :id</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <footer>
+        <p>Documentación disponible en <a href="https://github.com/albertomozo/notion_js_sdk_vercel" target="_blank">GitHub</a></p>
+    </footer>
+</body>
+</html>
