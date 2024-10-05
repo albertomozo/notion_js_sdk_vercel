@@ -1,3 +1,4 @@
 /node_modules
 vercel_old.json
 .vercel
+.env

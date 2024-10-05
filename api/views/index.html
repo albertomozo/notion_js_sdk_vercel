@@ -36,7 +36,9 @@
 </head>
 <body>
     <h1>Bienvenido a Mi API</h1>
+    <h3>Version V.1.0.0</h3>
     <p>Esta API permite realizar operaciones con cursos. A continuación se listan los endpoints disponibles:</p>
+    <p>la url base es :  https://notion-js-sdk-vercel.vercel.app</p>
 
     <table>
         <thead>
@@ -52,11 +54,12 @@
                 <td>/cursos</td>
                 <td>Devuelve todos los cursos</td>
             </tr>
+            <!--
             <tr>
                 <td>GET</td>
                 <td>/cursos/:id</td>
                 <td>Devuelve el curso con identificador :id</td>
-            </tr>
+            </tr>-->
             <tr>
                 <td>GET</td>
                 <td>/categorias</td>
@@ -64,9 +67,15 @@
             </tr>
             <tr>
                 <td>GET</td>
+                <td>/categorias/cursos</td>
+                <td>Devuelve todas los nombres,id de pagina , enlaces de los cursos, agrupados por Categorias</td>
+            </tr>
+            <!--
+            <tr>
+                <td>GET</td>
                 <td>/categorias/:id</td>
                 <td>Devuelve todos los curos de la categoria :id</td>
-            </tr>
+            </tr>-->
         </tbody>
     </table>
 
