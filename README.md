@@ -1,10 +1,13 @@
-# Mi API
+# API acceso a cursos.
 
-Una API simple creada con Node.js y Express, que permite realizar operaciones básicas como obtener y crear usuarios. Está alojada en Vercel.
+Una API simple creada con Node.js y Express, que permite realizar operaciones básicas sobre un sistema  creado en NOTION Vercel.
+
+Documentación https://docs.google.com/presentation/d/1rQTO_P0-XK4Awy_AqAJMwq1Q1z6xMzBpbSbDIKBgSKs/edit#slide=id.p
+
 
 ## Tabla de Contenidos
 
-- [Mi API](#mi-api)
+- [API acceso a cursos.](#api-acceso-a-cursos)
   - [Tabla de Contenidos](#tabla-de-contenidos)
   - [Instalación](#instalación)
   - [Uso](#uso)
@@ -51,6 +54,11 @@ curl http://localhost:3000/users
 ## Endpoint
 
 ## Despliegue en Vercel
+
+Alojamiento  en vercel donde esta alojada la API.
+
+https://notion-js-sdk-vercel.vercel.app
+
 
 ## Versionado
 

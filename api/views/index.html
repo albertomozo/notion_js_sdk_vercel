@@ -32,6 +32,9 @@
             font-size: 0.9em;
             color: #777;
         }
+        .error {
+            color :red;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +49,7 @@
                 <th>Método</th>
                 <th>Ruta</th>
                 <th>Descripción</th>
+                <th>Enlace</th>
             </tr>
         </thead>
         <tbody>
@@ -53,22 +57,32 @@
                 <td>GET</td>
                 <td>/cursos</td>
                 <td>Devuelve todos los cursos</td>
+                <td><a href="https://notion-js-sdk-vercel.vercel.app/cursos" target="_blank">pruebalo</a></td>
             </tr>
-            <!--
             <tr>
                 <td>GET</td>
-                <td>/cursos/:id</td>
-                <td>Devuelve el curso con identificador :id</td>
-            </tr>-->
+                <td>/cursosweb</td>
+                <td>Devuelve todos los cursos que estan marcado para ver en web</td>
+                <td><a href="https://notion-js-sdk-vercel.vercel.app/cursosweb" target="_blank">pruebalo</a></td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/cursos/:Nombre</td>
+                <td>Devuelve el curso con Nombre = :Nombre</td>
+                <td><a href="https://notion-js-sdk-vercel.vercel.app/cursos/Notion" target="_blank">pruebalo</a></td>
+            </tr>
+       
             <tr>
                 <td>GET</td>
                 <td>/categorias</td>
                 <td>Devuelve todas las categorias</td>
+                <td><a href="https://notion-js-sdk-vercel.vercel.app/categorias" target="_blank">pruebalo</a></td>
             </tr>
-            <tr>
+            <tr class="error">
                 <td>GET</td>
                 <td>/categorias/cursos</td>
-                <td>Devuelve todas los nombres,id de pagina , enlaces de los cursos, agrupados por Categorias</td>
+                <td>Devuelve todas los nombres,id de pagina , enlaces de los cursos, agrupados por Categorias </td>
+                <td><a href="https://notion-js-sdk-vercel.vercel.app/categorias/cursos" target="_blank">pruebalo</a></td>
             </tr>
             <!--
             <tr>
