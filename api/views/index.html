@@ -38,9 +38,9 @@
     </style>
 </head>
 <body>
-    <h1>Bienvenido a Mi API</h1>
-    <h3>Version V.1.0.0</h3>
-    <p>Esta API permite realizar operaciones con cursos. A continuación se listan los endpoints disponibles:</p>
+    <h1>API - Mis cursos</h1>
+    <h3>Version V.1.1.0</h3>
+    <p>Esta API permite realizar operaciones con cursos que estan almacenados <a href="https://pretty-streetcar-ee4.notion.site/99fe4ba7a31745ac9c762c250ed5c003?v=bfb15a01426d46bab38c82535b0b590d" target="_blank">en esta Base de datos de Notion</a> . A continuación se listan los endpoints disponibles:</p>
     <p>la url base es :  https://notion-js-sdk-vercel.vercel.app</p>
 
     <table>
@@ -62,9 +62,16 @@
             <tr>
                 <td>GET</td>
                 <td>/cursosweb</td>
-                <td>Devuelve todos los cursos que estan marcado para ver en web</td>
+                <td>Devuelve todos los cursos que estan marcados para ver en web en bruto, tal y como los almacena Notion </td>
                 <td><a href="https://notion-js-sdk-vercel.vercel.app/cursosweb" target="_blank">pruebalo</a></td>
             </tr>
+            <tr>
+                <td>GET</td>
+                <td>/cursosweb2</td>
+                <td>Devuelve todos los cursos que estan marcados para ver en web de manera más amigable, para poder procesarlos </td>
+                <td><a href="https://notion-js-sdk-vercel.vercel.app/cursosweb2" target="_blank">pruebalo</a></td>
+            </tr>facilmente.
+       
             <tr>
                 <td>GET</td>
                 <td>/cursos/:Nombre</td>
@@ -84,12 +91,7 @@
                 <td>Devuelve todas los nombres,id de pagina , enlaces de los cursos, agrupados por Categorias </td>
                 <td><a href="https://notion-js-sdk-vercel.vercel.app/categorias/cursos" target="_blank">pruebalo</a></td>
             </tr>
-            <!--
-            <tr>
-                <td>GET</td>
-                <td>/categorias/:id</td>
-                <td>Devuelve todos los curos de la categoria :id</td>
-            </tr>-->
+       
         </tbody>
     </table>
 

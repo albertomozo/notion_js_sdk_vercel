@@ -1,6 +1,6 @@
 # API acceso a cursos.
 
-Una API simple creada con Node.js y Express, que permite realizar operaciones básicas sobre un sistema  creado en NOTION Vercel.
+Una API simple creada con Node.js y Express, que permite realizar operaciones básicas sobre un sistema  creado en NOTION. Como esta alojado en un subdominio de Vercel, este proyeto tiene ficheros y configuraciones adapatados. 
 
 Documentación https://docs.google.com/presentation/d/1rQTO_P0-XK4Awy_AqAJMwq1Q1z6xMzBpbSbDIKBgSKs/edit#slide=id.p
 
