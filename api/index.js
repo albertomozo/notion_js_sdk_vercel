@@ -112,8 +112,8 @@ app.get('/cursos/:id', async (req, res) => {
   }
 });
 
-/* cursos que queremos se vean en internet */
-app.get('/cursosweb', async (req, res) => {
+/* cursos que queremos se vean en internet (version simple)*/
+/* app.get('/cursosweb', async (req, res) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer secret_vO7nwV1IHxSW4r8rpUjI6Uh210cjgFlvIy4R9dUQdE2");
   myHeaders.append("Content-Type", "application/json");
@@ -151,7 +151,7 @@ app.get('/cursosweb', async (req, res) => {
       console.error(error);
     });
 });
-
+ */
 /* cursos que queremos se vean en internet */
 app.get('/cursosweb2', async (req, res) => {
   const myHeaders = new Headers();
@@ -217,6 +217,90 @@ app.get('/cursosweb2', async (req, res) => {
           caracteristicas : caracteristicas, 
           enlace : enlace,
           categoriaId : categoriaId,
+          categoriaNombre : categoriaNombre       
+        });
+
+      })
+      res.json(cursos);
+
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+
+app.get('/cursosweb', async (req, res) => {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer secret_vO7nwV1IHxSW4r8rpUjI6Uh210cjgFlvIy4R9dUQdE2");
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Notion-Version", "2022-02-22");
+  myHeaders.append("Cookie", "__cf_bm=HorS1OcJh_B8aBmLBYvnSe7atFAUZPTDmzchHMTl_GE-1728905262-1.0.1.1-VPCKwwY1pKJGh0voY_62OF0.0.e3I38kHrMFvTskdE7wZAR6SX1NZzL3iU7cc4am.vp_SRFC8PnoLpJEP4V9nw; _cfuvid=UV7lie.TmRwIF_SVMXZxDopnIZ8nHt2AQT38mxq1YEE-1728905262909-0.0.1.1-604800000");
+
+  const raw = JSON.stringify({
+    "filter": {
+      "property": "Web",
+      "checkbox": {
+        "equals": true
+      }
+    },
+    "sorts": [
+      {
+        "property": "Name",
+        "direction": "ascending"
+      }
+    ]
+  });
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  };
+
+  let cursos = [];
+
+  fetch("https://api.notion.com/v1/databases/99fe4ba7a31745ac9c762c250ed5c003/query", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      //console.log(result);
+      //res.json(result);
+      result.results.forEach(curso =>{
+        //console.log(curso);
+        console.log(curso.id);
+        console.log(curso.properties.horas.number);
+        console.log(curso.properties.enlace.url);
+        console.log(curso.properties.Name.title[0].plain_text);
+        console.log(curso.properties.Caracteristicas.rich_text[0]?.plain_text);
+        console.log(curso.properties.categorias.relation[0].id);
+        console.log(categoriasMap.get(curso.properties.categorias.relation[0].id));
+        console.log('😀imagen ' + curso.properties.portada.files[0]?.file.url);
+        let imagen;
+        if (curso.properties.portada.files[0]?.file.url == undefined) {imagen = 'pordefecto'} else {
+          imagen = curso.properties.portada.files[0].file.url;
+        }
+        let cursoId = curso.id;
+        let horas = curso.properties.horas.number;
+        const enlace = curso.properties.enlace.url;
+        const nombre = curso.properties.Name.title[0].plain_text;
+        const caracteristicas = curso.properties.Caracteristicas.rich_text[0]?.plain_text;
+        const categoriaId = curso.properties.categorias.relation[0].id;
+        const categoriaNombre = categoriasMap.get(curso.properties.categorias.relation[0].id);
+        const precio = curso.properties.precio.number;
+        //const imagen = curso.properties.portada.files[0].file.url;
+
+
+
+
+        console.log('-------');
+        cursos.push({
+          cursoid : cursoId,
+          materia : nombre,
+          horas : horas,
+          caracteristicas : caracteristicas, 
+          url : enlace,
+          imagen : imagen,
+          precio : precio,
+          categoria : categoriaId,
           categoriaNombre : categoriaNombre       
         });
 
