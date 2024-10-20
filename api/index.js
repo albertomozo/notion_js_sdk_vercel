@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { Client } = require('@notionhq/client');
 require('dotenv').config();
 
@@ -11,6 +12,7 @@ console.log(`API Key: ${NOTION_API_KEY}`);
 console.log(`Database ID: ${DATABASE_IDen}`);
 
 const app = express();
+app.use(cors());
 
 // Configura el cliente de Notion
 const notion = new Client({
