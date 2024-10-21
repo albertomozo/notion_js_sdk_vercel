@@ -275,11 +275,25 @@ app.get('/cursosweb', async (req, res) => {
         console.log(curso.properties.Caracteristicas.rich_text[0]?.plain_text);
         console.log(curso.properties.categorias.relation[0].id);
         console.log(categoriasMap.get(curso.properties.categorias.relation[0].id));
-        console.log('😀imagen ' + curso.properties.portada.files[0]?.file.url);
+        //console.log('😀imagen ' + curso.properties.portada.files[0]?.file.url);
         let imagen;
-        if (curso.properties.portada.files[0]?.file.url == undefined) {imagen = 'pordefecto'} else {
-          imagen = curso.properties.portada.files[0].file.url;
+        if (curso.properties.portada.files[0]?.type == undefined) 
+          {imagen = 'pordefecto'} 
+        else {
+          if (curso.properties.portada.files[0].type== "file"){
+            imagen = curso.properties.portada.files[0].file.url;
+          }else {
+            console.log('external' + curso.properties.portada.files[0].type)
+            imagen = curso.properties.portada.files[0].external.url;
+            
+          }
+        
         }
+
+
+
+
+
         let cursoId = curso.id;
         let horas = curso.properties.horas.number;
         const enlace = curso.properties.enlace.url;
@@ -288,6 +302,7 @@ app.get('/cursosweb', async (req, res) => {
         const categoriaId = curso.properties.categorias.relation[0].id;
         const categoriaNombre = categoriasMap.get(curso.properties.categorias.relation[0].id);
         const precio = curso.properties.precio.number;
+        const oferta = curso.properties.oferta.number;
         //const imagen = curso.properties.portada.files[0].file.url;
 
 
@@ -303,7 +318,8 @@ app.get('/cursosweb', async (req, res) => {
           imagen : imagen,
           precio : precio,
           categoria : categoriaId,
-          categoriaNombre : categoriaNombre       
+          categoriaNombre : categoriaNombre,
+          oferta : oferta      
         });
 
       })
