@@ -9,8 +9,6 @@ const { formatearCurso } = require('./funciones');
 const NOTION_API_KEY = process.env.NOTION_API_KEY;
 const DATABASE_IDen = process.env.DATABASE_ID;
 const URL_BASE = process.env.URL_BASE;
-const now = new Date();
-const dateTimeString = now.toISOString();
 
 /* console.log(`API Key: ${NOTION_API_KEY}`);
 console.log(`Database ID: ${DATABASE_IDen}`); */
@@ -25,31 +23,26 @@ const notion = new Client({
 
 
 // creamos map de categorias
-let categoriasMap = new Map() ; // Crear el mapa de categorías
+let categoriasMap = new Map(); // Crear el mapa de categorías
 let cursosNombreMap = new Map(); // Crear el mapa de cursos
-let categoriasA = [];
 
 // Función para cargar las categorías en el mapa al iniciar la ejecucion
 const cargarCategorias = async () => {
-  
- console.log('entro en const cargarCategorias');
+ console.log('entro en const cargarCAtegorias');
   try {
     const response = await notion.databases.query({
       database_id: 'd75c7df2c27a49df89bac3d4fc1cc04f',  // ID de tu base de datos de categorías
     });
     // Limpiar el mapa antes de cargar nuevas categorías
     categoriasMap.clear();
-    categoriasA = [];
     console.log('entro en try cargarCategorias' + response);
     response.results.forEach(page => {
       const pageId = page.id;
       let name = 'Sin nombre';
-      console.log ('pageiid: ' + page );
       if (page.properties.Nombre?.title[0]?.plain_text) {
         name = page.properties.Nombre.title[0].plain_text;
       }
       categoriasMap.set(pageId, name);
-      categoriasA[page] = name;
     });
 
     console.log('Categorías cargadas correctamente:', categoriasMap);
@@ -73,7 +66,6 @@ const cargarCursos = async () => {
 
       const cursosid = curso.id;
       const nombre = curso.properties.Name.title[0].plain_text;
-      //const nombre = 'prueba'
       cursosNombreMap.set(cursosid, nombre); 
         
     });
@@ -85,27 +77,12 @@ const cargarCursos = async () => {
 }
 
 
-/* // Cargar categorías al arrancar el servidor
+// Cargar categorías al arrancar el servidor
 cargarCategorias();
 console.log(categoriasMap);
 // Cargar categorías al arrancar el servidor
 cargarCursos();
-console.log('cursos :  ' + cursosNombreMap); */
-const iniciarServidor = async () => {
-  try
-  {
-   await cargarCategorias();
-   await cargarCursos();
-   
-  } catch (error) {
-    console.error('Error al iniciar servidor:', error);
-  }
-  
-}; // FIN CONST iniciarServidor
-//////
-// Llama a la función para cargar los datos y arrancar el servidor
-iniciarServidor();
-
+console.log('cursos :  ' + cursosNombreMap);
 
 
 
@@ -113,43 +90,8 @@ iniciarServidor();
 // Ruta principal
 app.get('/', async (req, res) => {
   try {
-    console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 / 🎯🎯🎯🎯🎯`);
     //res.send('Ongi etorri cursos de Alberto Mozo');
     res.sendFile(__dirname + '/views/index.html'); // Sirve el HTML de la página de inicio
-    console.log('------Ongi etorri------------');
-    console.log(`API Key: ${NOTION_API_KEY}`);
-    console.log(`Database ID: ${DATABASE_IDen}`);
-    console.log('categoriasMap ' + categoriasMap.size);
-    console.log('cursosNombreMap '  + cursosNombreMap.size);  
-    console.log('categoriasA ' + categoriasA.length);
-    console.log('----------------------------');
-  
-  } catch (error) {
-    console.error(error);
-    
-    res.status(500).send('Error al consultar Notion');
-  }
-});
-
-// Ruta principal
-app.get('/cargasync', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 cargasync 🎯🎯🎯🎯🎯`);
-  try {
-    // Espera a que las variables se carguen completamente
-    if (categoriasMap.size === 0 || cursosNombreMap.size === 0) {
-      await cargarCategorias();
-      await cargarCursos();
-    }
-
-    res.sendFile(__dirname + '/views/index.html'); // Sirve el HTML de la página de inicio
-    console.log('------Ongi etorri------------');
-    console.log(`API Key: ${NOTION_API_KEY}`);
-    console.log(`Database ID: ${DATABASE_IDen}`);
-    console.log('categoriasMap ' + categoriasMap.size);
-    console.log('cursosNombreMap '  + cursosNombreMap.size);  
-    console.log('categoriasA ' + categoriasA.length);
-    console.log('----------------------------');
-
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al consultar Notion');
@@ -158,13 +100,11 @@ app.get('/cargasync', async (req, res) => {
 
 // Ruta para consultar cursos
 app.get('/cursos', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 cursos 🎯🎯🎯🎯🎯`);
   try {
     const response = await notion.databases.query({
       database_id: '99fe4ba7a31745ac9c762c250ed5c003',
     });
     res.json(response.results);
-
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al consultar Notion');
@@ -172,7 +112,6 @@ app.get('/cursos', async (req, res) => {
 });
 
 app.get('/cursos2', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 cursos2 🎯🎯🎯🎯🎯`);
   try {
     const response = await notion.databases.query({
       database_id: '99fe4ba7a31745ac9c762c250ed5c003',
@@ -192,7 +131,6 @@ app.get('/cursos2', async (req, res) => {
 
 // Ruta para consultar un curso por ID
 app.get('/search/cursos/:nombre', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 /search/cursos/:nombre 🎯🎯🎯🎯🎯`);
   const cursoId = req.params.nombre; 
    // Captura el id desde la URL
    console.log(':nombre ' + cursoId);
@@ -247,7 +185,6 @@ app.get('/search/cursos/:nombre', async (req, res) => {
 
 /* cursos que queremos se vean en internet */
 app.get('/cursosweb2', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 cursosweb2 🎯🎯🎯🎯🎯`);
   const myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer secret_vO7nwV1IHxSW4r8rpUjI6Uh210cjgFlvIy4R9dUQdE2");
   myHeaders.append("Content-Type", "application/json");
@@ -324,7 +261,6 @@ app.get('/cursosweb2', async (req, res) => {
 });
 
 app.get('/cursosweb', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 cursosweb 🎯🎯🎯🎯🎯`);
   const myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer secret_vO7nwV1IHxSW4r8rpUjI6Uh210cjgFlvIy4R9dUQdE2");
   myHeaders.append("Content-Type", "application/json");
@@ -447,7 +383,6 @@ app.get('/cursosweb', async (req, res) => {
 
 // Ruta para consultar un curso por ID
 app.get('/cursosid/:id', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 cursosid/:id 🎯🎯🎯🎯🎯`);
   const cursoId = req.params.id;  // Captura el id desde la URL
   try {
     const response = await notion.databases.query({
@@ -461,7 +396,7 @@ app.get('/cursosid/:id', async (req, res) => {
     });
 
     if (response.results.length === 0) {
-      return res.status(404).send('Curso ' + cursoId +' no encontrado');
+      return res.status(404).send('Curso no encontrado');
     }
 
     // Extraer y formatear los datos del curso
@@ -478,14 +413,13 @@ app.get('/cursosid/:id', async (req, res) => {
     res.json(response)
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error al consultar curso ' + cursoId +' Notion');
+    res.status(500).send('Error al consultar Notion');
   }
 });
 
 
 // Ruta para consultar usuarios
 app.get('/user', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 user 🎯🎯🎯🎯🎯`);
   try {
     const listUsersResponse = await notion.users.list();
     res.json(listUsersResponse.results);
@@ -512,9 +446,7 @@ app.get('/user', async (req, res) => {
  
 
 // Ruta para obtener las categorías
-app.get('/categorias', async (req, res) => { 
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 categorias 🎯🎯🎯🎯🎯`);
-
+app.get('/categorias', async (req, res) => {
   try {
     const response = await notion.databases.query({
       database_id: 'd75c7df2c27a49df89bac3d4fc1cc04f',  // ID de tu base de datos
@@ -563,16 +495,9 @@ app.get('/categorias', async (req, res) => {
 
 // Ruta para obtener las categorías
 app.get('/categoriascursos', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 categoriacursos 🎯🎯🎯🎯🎯`);
-  
-  try {''
-   
-    // Espera a que las variables se carguen completamente
-    if (categoriasMap.size === 0 || cursosNombreMap.size === 0) {
-      console.log('❓ Mapear');
-      await cargarCategorias();
-      await cargarCursos();
-    }
+
+  try {
+    //cargarCursos();
     const response = await notion.databases.query({
       database_id: 'd75c7df2c27a49df89bac3d4fc1cc04f',  // ID de tu base de datos
       //database_id: '121add6e20d14737b018064e3f08ca65',  // ID de tu base de datos
@@ -607,7 +532,7 @@ app.get('/categoriascursos', async (req, res) => {
           id : curso.id,
           nombre : nombrecurso
         };
-        //console.log(cursoItem);
+        console.log(cursoItem);
         cursos.push(cursoItem);
         //console.log('😀'+ curso);
       })
@@ -638,10 +563,14 @@ app.get('/categoriascursos', async (req, res) => {
 });
 
 
+app.get('/categorias2', async (req, res) => {
+  console.log('categorias2')
+  console.log(categoriasMap);
+  res.send(categoriasMap)
 
+});
 
 app.get('/search/categoria/:search', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 search/categoria/:search 🎯🎯🎯🎯🎯`);
   const search = req.params.search;  // Captura el id desde la URL
   const resultados = [];
   console.log(categoriasMap);
@@ -674,7 +603,6 @@ app.get('/search/categoria/:search', async (req, res) => {
 
 
 app.get('/categorias/cursos2', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 categorias/cursos2 🎯🎯🎯🎯🎯`);
   try {
     const response = await notion.databases.query({
       database_id: 'd75c7df2c27a49df89bac3d4fc1cc04f',  // ID de tu base de datos
@@ -735,7 +663,6 @@ app.get('/categorias/cursos2', async (req, res) => {
 });
 
 app.get('/categorias/cursos', async (req, res) => {
-  console.log(`[${dateTimeString}] 🎯🎯🎯🎯🎯 categoria/cursos 🎯🎯🎯🎯🎯`);
   try {
   
     const response = await notion.databases.query({
@@ -806,7 +733,7 @@ app.get('/categorias/cursos', async (req, res) => {
   }
 });
 
-
+//////
 
 
 
